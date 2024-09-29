@@ -50,7 +50,7 @@ getProducts(page:number,pageSize:number):Observable<APIResponse<PageList<Product
   .set('PageSize',pageSize);
   this.resourceName = 'Product/'
   this.ApiName = 'GetProduct';
-  this.url = environment.API_BaseURL;
+  this.url = environment.API_LiveURL;
   return this.httpGetWithParam(params);
 }
 
@@ -75,7 +75,7 @@ getProducts(page:number,pageSize:number):Observable<APIResponse<PageList<Product
 
     this.resourceName = 'Product/'
     this.ApiName = 'AddProduct';
-    this.url = environment.API_BaseURL;
+    this.url = environment.API_LiveURL;
     return this.httpPost(formData).pipe(map(a=>a.content));
   }
 
