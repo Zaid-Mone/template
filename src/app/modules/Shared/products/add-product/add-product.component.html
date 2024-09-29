@@ -1,0 +1,185 @@
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="page-header">
+      <div class="content-page-header">
+        <h5>اضافة منتج جديد</h5>
+      </div>
+      <div>
+        <a class="btn btn-primary" [routerLink]="['../products']"
+          >العودة إلى قائمة المنتجات</a
+        >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group-item">
+            <!-- <h5 class="form-title">Basic Details</h5> -->
+            <div class="row">
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3">
+                  <label for="Product"
+                    >اسم المنتج <span class="text-danger"> *</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="productName"
+                    placeholder="أدخل اسم المنتج"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3">
+                  <label for="Selling"
+                    >سعر المنتج <span class="text-danger"> *</span></label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="productPrice"
+                    placeholder="أدخل سعر بيع المنتج"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3">
+                  <label for="Role"
+                    >العلامة التجارية للمنتج
+                    <span class="text-danger"> *</span></label
+                  >
+                  <mat-select
+                    class="select custom-mat-select"
+                    formControlName="brandID"
+                    placeholder="اختيار العلامة التجارية للمنتج"
+                  >
+                    <mat-option
+                      *ngFor="let brand of brands"
+                      [value]="brand.id"
+                      >{{ brand.brandNameAr }}</mat-option
+                    >
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3">
+                  <label for="Role"
+                    >أنواع المنتج <span class="text-danger"> *</span></label
+                  >
+                  <mat-select
+                    class="select custom-mat-select"
+                    formControlName="typeID"
+                    placeholder="اختيار أنواع المنتج"
+                  >
+                    <mat-option
+                      *ngFor="let type of productTypes"
+                      [value]="type.id"
+                      >{{ type.typeNameAr }}</mat-option
+                    >
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3">
+                  <label for="Role"
+                    >العملة <span class="text-danger"> *</span></label
+                  >
+                  <mat-select
+                    class="select custom-mat-select"
+                    formControlName="currencyID"
+                    placeholder="اختيار العملة"
+                  >
+                    <mat-option
+                      *ngFor="let curr of currencies"
+                      [value]="curr.id"
+                      >{{ curr.currancyNameAr }}</mat-option
+                    >
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="input-block mb-3 add-products">
+                  <label for="Barcode">Generate Barcode</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Barcode Code"
+                  />
+                  <button type="submit" class="btn btn-primary">
+                    Generate Code
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group-item">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12 description-box">
+                <div class="input-block mb-3" id="summernote_container">
+                  <label for="Descriptions" class="form-control-label"
+                    >وصف المنتج</label
+                  >
+
+                  <div class="editor">
+                    <ngx-editor
+                      [editor]="editor"
+                      [placeholder]="'اكتب هنا ....'"
+                      formControlName="description"
+                    >
+                      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                      </ngx-editor-menu>
+                    </ngx-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-block mb-3">
+                  <label for="product-image">المرفقات</label>
+                  <ngx-dropzone
+                    (change)="onSelect($event)"
+                    class="service-upload"
+                  >
+                    <ngx-dropzone-label class="drop-browse align-center">
+                      <span
+                        ><img src="assets/img/icons/drop-icon.svg" alt="upload"
+                      /></span>
+                      <div class="d-flex">قم بإرفاق أو إسقاط الملفات هنا.</div>
+
+                      <span class="text-muted"
+                        >الحد الأقصى للحجم: 50 ميجابايت</span
+                      >
+                    </ngx-dropzone-label>
+                    @for (f of files; track f) {
+                      <ngx-dropzone-image-preview
+                        ngProjectAs="ngx-dropzone-preview"
+                        [file]="f"
+                        [removable]="true"
+                        (removed)="onRemove(f)"
+                      >
+                      </ngx-dropzone-image-preview>
+                    }
+                  </ngx-dropzone>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <button type="reset" class="btn btn-primary cancel me-2">
+            Cancel
+          </button> -->
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="form.invalid"
+          >
+            اضافة
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
